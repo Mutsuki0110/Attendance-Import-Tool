@@ -39,3 +39,7 @@ Thumbs.db
 secrets.yml
 secrets.json
 secrets.env
+
+# Ignore Excel files
+*.xlsx
+*.xls
