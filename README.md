@@ -4,8 +4,8 @@ This project is to help facilitate the process of importing missing attendance r
 
 ## Prerequisites
 
-Use `Python` version newer than `3.9.6` is recommended.  
-Older `Python` version might work, but it is not being tested.
+The project is built with `Python` of version `3.9.6`.  
+Other `Python` version should also work, but it is not being tested.
 
 ## Dependencies
 
@@ -13,13 +13,14 @@ Make sure to install packages listed below before using.
 
 - [pandas](https://pandas.pydata.org/)
 - [openpyxl](https://openpyxl.readthedocs.io/en/stable/)
+- [shutil](https://docs.python.org/3/library/shutil.html)
 
 ## Preparation
 
 The following files should all be in Microsoft Excel spreadsheet format (.xlsx).
 
-1. Weekly recorded attendance
-2. Daily exported attendance records from LMS
+1. Manually recorded attendance
+2. Exported attendance records from LMS
 
 ### Filename Formatting Requirements
 
