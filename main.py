@@ -10,7 +10,7 @@ def xlookup(lookup_value, lookup_array, return_array, if_not_found:str = ''):
 	match_value = return_array.loc[lookup_array == lookup_value]
 
 	if match_value.empty:
-		return f'"{lookup_value}" not found!' if if_not_found == '' else if_not_found
+		return '' if if_not_found == '' else if_not_found
 	else:
 		return match_value.tolist()[0]
 
@@ -119,7 +119,7 @@ with pd.ExcelWriter(xlookup_file_path) as writer:
 print(f"XLOOKUP-ed file saved to: {xlookup_file_path}")
 
 # Define the import template file path
-source_file = 'importTemplate.xlsx'
+import_template_file = 'final_output_files/importTemplate.xlsx'
 
 # Define the destination directory
 import_dest_dir = 'final_output_files'
@@ -131,13 +131,12 @@ new_import_filename = f'importTemplate-{date}.xlsx'
 import_dest_path = os.path.join(import_dest_dir, new_import_filename)
 
 # Copy the file to the new destination with the new name
-shutil.copy(source_file, import_dest_path)
+shutil.copy(import_template_file, import_dest_path)
 
 print(f'File copied to {import_dest_path}')
 
 # File paths
-xlookup_file_path = 'xlookup-weekly-attendance.xlsx'
-import_template_path = 'importTemplate.xlsx'
+xlookup_file_path = 'combined_records/xlookup-weekly-attendance.xlsx'
 output_dir = 'final_output_files'
 
 # Load the xlookup weekly attendance workbook
@@ -149,32 +148,35 @@ extracted_data = []
 
 # Iterate through all the daily record worksheets
 for sheet_name in wb.sheetnames:
-    if sheet_name != 'main':
-        lms_start_col = f'lms-start-{sheet_name}'
-        lms_end_col = f'lms-end-{sheet_name}'
+	if sheet_name != 'main':
+		start_col = f'start-{sheet_name}'
+		end_col = f'end-{sheet_name}'
+		lms_start_col = f'lms-start-{sheet_name}'
+		lms_end_col = f'lms-end-{sheet_name}'
 
-        for _, row in main_df.iterrows():
-            if pd.isna(row[lms_start_col]) and pd.isna(row[lms_end_col]):
-                continue
+		for _, row in main_df.iterrows():
+			if pd.notna(row[lms_start_col]) or pd.notna(row[lms_end_col]):
+				continue
 
-            if pd.notna(row[lms_start_col]) or pd.notna(row[lms_end_col]):
-                employee_no = row['employeeNo']
-                start_time = row[lms_start_col] if pd.notna(row[lms_start_col]) else ''
-                end_time = row[lms_end_col] if pd.notna(row[lms_end_col]) else ''
-                formatted_date = datetime.strptime(sheet_name, "%m-%d").strftime("%-m/%d/%y")
-                extracted_data.append([employee_no, "操作员", formatted_date, start_time, end_time, ""])
+			if (pd.notna(row['employeeNo'])) and (pd.isna(row[lms_start_col]) and pd.isna(row[lms_end_col])) and (pd.notna(row[start_col]) and pd.notna(row[end_col])):
+				employee_no = row['employeeNo']
+				start_time = row[start_col] if pd.isna(row[lms_start_col]) else ''
+				end_time = row[end_col] if pd.isna(row[lms_end_col]) else ''
+				current_year = datetime.now().year
+				date_str = f"{current_year}-{sheet_name}"
+				formatted_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%-m/%d/%Y")
+				extracted_data.append([employee_no, "操作员", formatted_date, start_time, end_time, ""])
 
 # Load the import template workbook
-import_template_wb = load_workbook(import_template_path)
+import_template_wb = load_workbook(import_template_file)
 import_template_ws = import_template_wb.active
 
 # Append the extracted data to the import template
 for row in extracted_data:
-    import_template_ws.append(row)
+	import_template_ws.append(row)
 
 # Save the updated import template
 new_import_filename = f'importTemplate-{date}.xlsx'
 import_template_wb.save(os.path.join(output_dir, new_import_filename))
 
-print(f"Data extracted and saved to {os.path.join(output_dir, new_import_filename)}")
-
+print(f"Imported records saved to {os.path.join(output_dir, new_import_filename)}")
