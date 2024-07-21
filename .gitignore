@@ -42,4 +42,5 @@ secrets.env
 
 # Ignore Excel files
 *.xlsx
-*.xls
+*.xlsx
+!importTemplate.xlsx
