@@ -2,6 +2,10 @@
 
 This project is to help facilitate the process of importing missing attendance records of workers.
 
+Start using the app right away by clicking the badge below!  
+  
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://jd-ait.streamlit.app)
+
 ## Prerequisites
 
 The project is built with `Python` of version `3.9.6`.  
