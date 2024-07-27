@@ -14,7 +14,14 @@ def xlookup(lookup_value, lookup_array, return_array, if_not_found:str = ''):
 		return '' if if_not_found == '' else if_not_found
 	else:
 		return match_value.tolist()[0]
-	
+
+# Set the page configuration
+st.set_page_config(
+	page_title="Attendance Import Tool",
+	page_icon="🕔",
+	layout="centered"
+)
+
 # Set the page title
 st.title("Attendance Import Tool")
 
