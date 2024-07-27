@@ -11,7 +11,7 @@ Other `Python` version should also work, but it is not being tested.
 
 - [pandas](https://pandas.pydata.org/)
 - [openpyxl](https://openpyxl.readthedocs.io/en/stable/)
-- [shutil](https://docs.python.org/3/library/shutil.html)
+- [Streamlit](https://streamlit.io/)
 
 ## Preparation
 
