@@ -71,7 +71,7 @@ if uploaded_template:
 	with open(template_path, "wb") as f:
 		f.write(uploaded_template.getbuffer())
 	
-	st.success(f"File {template_file} uploaded successfully to {source_files_folder}.")
+	st.success(f"File {template_file} uploaded successfully to {final_output_files_folder}.")
 
 # Check if the date is valid
 if st.button("Process Files"):
