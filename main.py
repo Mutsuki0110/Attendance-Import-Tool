@@ -297,3 +297,9 @@ if st.button("Process Files"):
 			file_name=new_import_filename,
 			mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 		)
+
+	# Remove the source_files, extracted_files, and combined_records, final_output_files folders
+	shutil.rmtree('source_files')
+	shutil.rmtree('extracted_files')
+	shutil.rmtree('combined_records')
+	shutil.rmtree('final_output_files')
