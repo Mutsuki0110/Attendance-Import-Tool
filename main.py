@@ -303,3 +303,5 @@ if st.button("Process Files"):
 	shutil.rmtree('extracted_files')
 	shutil.rmtree('combined_records')
 	shutil.rmtree('final_output_files')
+	# Rerun the script
+	st.rerun()
