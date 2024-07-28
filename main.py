@@ -21,6 +21,24 @@ st.set_page_config(
 	page_icon="🕔",
 	layout="centered"
 )
+# Define the disclaimer dialog
+@st.experimental_dialog("Disclaimer")
+def disclaimer_dialog():
+	st.write("""
+		- This tool is designed to automate the process of importing attendance records from multiple sources.  
+		  
+		- This tool is intended for **internal use only** and should not be shared with unauthorized individuals.
+		By using this tool, you agree to comply with the company's data security and privacy policies.  
+		  
+		- Please make sure to review the imported records for accuracy before finalizing the import process.  
+		  
+		- This tool is not affiliated with **JD Logistics United States Company** and is not under the regulation of **JD Logistics United States Company**.
+		By using this tool, you agree that any unwanted results or consequences are not the responsibility of the author of this tool.  
+		  
+		**Using this tool indicates your acceptance of the disclaimer.**
+	""")
+# Display the disclaimer dialog
+disclaimer_dialog()
 
 # Set the page title
 st.title("Attendance Import Tool")
