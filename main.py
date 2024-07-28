@@ -21,33 +21,36 @@ st.set_page_config(
 	page_icon="🕔",
 	layout="centered"
 )
-# Define the disclaimer dialog
-@st.experimental_dialog("Disclaimer")
-def disclaimer_dialog():
-	st.write("""
-		- This tool is designed to automate the process of importing attendance records from multiple sources.  
-		  
-		- This tool is intended for **internal use only** and should not be shared with unauthorized individuals.
-		By using this tool, you agree to comply with the company's data security and privacy policies.  
-		  
-		- Please make sure to review the imported records for accuracy before finalizing the import process.  
-		  
-		- This tool is not affiliated with **JD Logistics United States Company** and is not under the regulation of **JD Logistics United States Company**.
-		By using this tool, you agree that any unwanted results or consequences are not the responsibility of the author of this tool.  
-		  
-		**Using this tool indicates your acceptance of the disclaimer.**
-	""")
-# Display the disclaimer dialog
-disclaimer_dialog()
+# Define the disclaimer warning box
+st.warning("""
+	### Disclaimer  
+	- This tool is designed to automate the process of importing attendance records from multiple sources.  
+		
+	- This tool is intended for **internal use only** and should not be shared with unauthorized individuals.
+	By using this tool, you agree to comply with the company's data security and privacy policies.  
+		
+	- Please make sure to review the imported records for accuracy before finalizing the import process.  
+		
+	- This tool is not affiliated with **JD Logistics United States Company** and is not under the regulation of **JD Logistics United States Company**.
+	By using this tool, you agree that any unwanted results or consequences are not the responsibility of the author of this tool.  
+	  
+	**Using this tool indicates your acceptance of the above disclaimer.**
+""")
 
 # Set the page title
 st.title("Attendance Import Tool")
 
 # Prompt the user for the initial date
-# date = input("Enter the date with format 'mm-dd' (e.g., 07-18): ")
 date = st.date_input("Pick a date")
+# Info message for the date selection
+st.info("Select the date for which you want to import attendance records.")
+# LMS attendance file upload
 uploaded_lms_files = st.file_uploader("Upload LMS Record Files", type=["xlsx"], accept_multiple_files=True)
-
+# Info message for the LMS attendance files
+st.info("""
+		File name should have a format of `lms-record-{mm}-{dd}.xlsx`.  
+		For instance, `lms-record-07-18.xlsx` is a valid filename; `lms_record_07_18.xlsx` is not.
+""")
 # Define the directory to save the uploaded files
 source_files_folder = "source_files"
 
@@ -64,9 +67,14 @@ if uploaded_lms_files:
 		with open(lms_file_path, "wb") as f:
 			f.write(uploaded_lms_file.getbuffer())
 		
-		st.success(f"File {lms_file_name} uploaded successfully to {source_files_folder}.")
-
+		st.success(f"File {lms_file_name} uploaded successfully.")
+# Manual attendance file upload
 uploaded_manual_attendance_file = st.file_uploader("Upload Manual Attendance File", type=["xlsx"])
+# Info message for the manual attendance file
+st.info("""
+		File name should have a format of `manual-attendance-{mm}-{dd}.xlsx`.  
+		For instance, `manual-attendance-07-18.xlsx` is a valid filename; `manual_attendance_07_18.xlsx` is not.
+""")
 
 # Check if manual attendance file is uploaded
 if uploaded_manual_attendance_file:
@@ -77,9 +85,11 @@ if uploaded_manual_attendance_file:
 	with open(manual_attendance_path, "wb") as f:
 		f.write(uploaded_manual_attendance_file.getbuffer())
 	
-	st.success(f"File {manual_attendance_file} uploaded successfully to {source_files_folder}.")
-
+	st.success(f"File {manual_attendance_file} uploaded successfully.")
+# Import template file upload
 uploaded_template = st.file_uploader("Upload Import Template File", type=["xlsx"])
+# Info message for the import template file
+st.info("Import template retreived from LMS.")
 
 # Define the directory to save the final output files
 final_output_files_folder = "final_output_files"
@@ -96,7 +106,7 @@ if uploaded_template:
 	with open(template_path, "wb") as f:
 		f.write(uploaded_template.getbuffer())
 	
-	st.success(f"File {template_file} uploaded successfully to {final_output_files_folder}.")
+	st.success(f"File {template_file} uploaded successfully.")
 
 # Check if the date is valid
 if st.button("Process Files"):
