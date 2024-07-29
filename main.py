@@ -21,6 +21,19 @@ st.set_page_config(
 	page_icon="🕔",
 	layout="centered"
 )
+# Reset date
+date = None
+# Reset uploaded files
+uploaded_lms_files = None
+uploaded_manual_attendance_file = None
+# Remove the source_files folder
+shutil.rmtree("source_files", ignore_errors=True)
+# Remove the extracted_files folder
+shutil.rmtree("extracted_files", ignore_errors=True)
+# Remove the combined_records folder
+shutil.rmtree("combined_records", ignore_errors=True)
+# Remove the final_output_files folder
+shutil.rmtree("final_output_files", ignore_errors=True)
 # Define the disclaimer warning box
 st.warning("""
 	### Disclaimer  
