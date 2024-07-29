@@ -62,7 +62,7 @@ uploaded_lms_files = st.file_uploader("Upload LMS Record Files", type=["xlsx"], 
 # Info message for the LMS attendance files
 st.info("""
 		File name should have a format of `lms-record-{mm}-{dd}.xlsx`.  
-		For instance, `lms-record-07-18.xlsx` is a valid filename; `lms_record_07_18.xlsx` is not.
+		For instance, `lms-record-07-18.xlsx` is valid; `lms_record_07_18.xlsx` is not.
 """)
 # Define the directory to save the uploaded files
 source_files_folder = "source_files"
@@ -86,7 +86,7 @@ uploaded_manual_attendance_file = st.file_uploader("Upload Manual Attendance Fil
 # Info message for the manual attendance file
 st.info("""
 		File name should have a format of `manual-attendance-{mm}-{dd}.xlsx`.  
-		For instance, `manual-attendance-07-18.xlsx` is a valid filename; `manual_attendance_07_18.xlsx` is not.
+		For instance, `manual-attendance-07-18.xlsx` is valid; `manual_attendance_07_18.xlsx` is not.
 """)
 
 # Check if manual attendance file is uploaded
@@ -102,7 +102,9 @@ if uploaded_manual_attendance_file:
 # Import template file upload
 uploaded_template = st.file_uploader("Upload Import Template File", type=["xlsx"])
 # Info message for the import template file
-st.info("Import template retreived from LMS.")
+st.info("""Import template retreived from LMS.  
+		File name should be `importTemplate.xlsx`.
+""")
 
 # Define the directory to save the final output files
 final_output_files_folder = "final_output_files"
@@ -275,8 +277,8 @@ if st.button("Process Files"):
 						start_time_dt = datetime.strptime(start_time, "%H:%M:%S")
 						end_time_dt = datetime.strptime(end_time, "%H:%M:%S")
 						# Night Shift Handling
-						# Check if the start time starts after 20:00
-						if start_time_dt > datetime.strptime("20:00:00", "%H:%M:%S"):
+						# Check if the start time starts after 17:00
+						if start_time_dt >= datetime.strptime("17:00:00", "%H:%M:%S"):
 							# Swap times' A.M. and P.M.
 							start_time_dt -= timedelta(hours=12)
 							end_time_dt += timedelta(hours=12)
