@@ -14,6 +14,17 @@ def xlookup(lookup_value, lookup_array, return_array, if_not_found:str = ''):
 		return '' if if_not_found == '' else if_not_found
 	else:
 		return match_value.tolist()[0]
+	
+# Reset function
+def reset():
+	# Remove the source_files folder
+	shutil.rmtree("source_files", ignore_errors=True)
+	# Remove the extracted_files folder
+	shutil.rmtree("extracted_files", ignore_errors=True)
+	# Remove the combined_records folder
+	shutil.rmtree("combined_records", ignore_errors=True)
+	# Remove the final_output_files folder
+	shutil.rmtree("final_output_files", ignore_errors=True)
 
 # Set the page configuration
 st.set_page_config(
@@ -21,19 +32,8 @@ st.set_page_config(
 	page_icon="🕔",
 	layout="centered"
 )
-# Reset date
-date = None
-# Reset uploaded files
-uploaded_lms_files = None
-uploaded_manual_attendance_file = None
-# Remove the source_files folder
-shutil.rmtree("source_files", ignore_errors=True)
-# Remove the extracted_files folder
-shutil.rmtree("extracted_files", ignore_errors=True)
-# Remove the combined_records folder
-shutil.rmtree("combined_records", ignore_errors=True)
-# Remove the final_output_files folder
-shutil.rmtree("final_output_files", ignore_errors=True)
+# Reset the page
+reset()
 # Define the disclaimer warning box
 st.warning("""
 	### Disclaimer  
@@ -322,16 +322,3 @@ if st.button("Process Files"):
 			file_name=new_import_filename,
 			mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 		)
-	# Reset date
-	date = None
-	# Reset uploaded files
-	uploaded_lms_files = None
-	uploaded_manual_attendance_file = None
-	# Remove the source_files folder
-	shutil.rmtree(source_files_folder)
-	# Remove the extracted_files folder
-	shutil.rmtree(extracted_files_folder)
-	# Remove the combined_records folder
-	shutil.rmtree(combined_records_folder)
-	# Remove the final_output_files folder
-	shutil.rmtree(final_output_files_folder)
