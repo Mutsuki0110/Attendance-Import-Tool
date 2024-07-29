@@ -265,7 +265,7 @@ if st.button("Process Files"):
 						if start_time_dt > datetime.strptime("20:00:00", "%H:%M:%S"):
 							# Swap start and end time's A.M. and P.M.
 							start_time_dt -= timedelta(hours=12)
-							end_time_dt += timedelta(hours=12)
+							end_time_dt -= timedelta(hours=12)
 						# Calculate the duration between start_time and end_time
 						duration = end_time_dt - start_time_dt
 						# Check if the duration is greater than 4 hours
