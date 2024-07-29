@@ -284,7 +284,7 @@ if st.button("Process Files"):
 					# Construct the formatted date
 					current_year = datetime.now().year
 					date_str = f"{current_year}-{sheet_name}"
-					formatted_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%-m/%d/%Y")
+					formatted_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%-m/%-d/%Y")
 					extracted_data.append([employee_no, "操作员", formatted_date, start_time, end_time, ""])
 
 	# Load the import template workbook
