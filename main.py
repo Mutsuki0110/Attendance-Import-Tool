@@ -261,11 +261,15 @@ if st.button("Process Files"):
 					if start_time and end_time:
 						start_time_dt = datetime.strptime(start_time, "%H:%M:%S")
 						end_time_dt = datetime.strptime(end_time, "%H:%M:%S")
-						# Night Shift Handling: Check if the start time starts after 20:00
+						# Night Shift Handling
+						# Check if the start time starts after 20:00
 						if start_time_dt > datetime.strptime("20:00:00", "%H:%M:%S"):
-							# Swap start and end time's A.M. and P.M.
+							# Swap start time's A.M. and P.M.
 							start_time_dt -= timedelta(hours=12)
-							end_time_dt -= timedelta(hours=12)
+						# Check if the end time is before 06:00
+						if end_time_dt < datetime.strptime("06:00:00", "%H:%M:%S"):
+							# Swap end time's A.M. and P.M.
+							end_time_dt += timedelta(hours=12)
 						# Calculate the duration between start_time and end_time
 						duration = end_time_dt - start_time_dt
 						# Check if the duration is greater than 4 hours
