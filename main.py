@@ -311,3 +311,14 @@ if st.button("Process Files"):
 		)
 	# Reset date
 	date = None
+	# Reset uploaded files
+	uploaded_lms_files = None
+	uploaded_manual_attendance_file = None
+	# Remove the source_files folder
+	shutil.rmtree(source_files_folder)
+	# Remove the extracted_files folder
+	shutil.rmtree(extracted_files_folder)
+	# Remove the combined_records folder
+	shutil.rmtree(combined_records_folder)
+	# Remove the final_output_files folder
+	shutil.rmtree(final_output_files_folder)
