@@ -264,12 +264,13 @@ if st.button("Process Files"):
 						# Night Shift Handling
 						# Check if the start time starts after 20:00
 						if start_time_dt > datetime.strptime("20:00:00", "%H:%M:%S"):
-							# Swap start time's A.M. and P.M.
+							# Swap times' A.M. and P.M.
 							start_time_dt -= timedelta(hours=12)
-						# Check if the end time is before 06:00
-						if end_time_dt < datetime.strptime("06:00:00", "%H:%M:%S"):
-							# Swap end time's A.M. and P.M.
 							end_time_dt += timedelta(hours=12)
+							# Update start_time with the new value
+							start_time = start_time_dt.strftime('%H:%M:%S')
+							# Update end_time with the new value
+							end_time = end_time_dt.strftime('%H:%M:%S')
 						# Calculate the duration between start_time and end_time
 						duration = end_time_dt - start_time_dt
 						# Check if the duration is greater than 4 hours
@@ -278,6 +279,8 @@ if st.button("Process Files"):
 							start_time_dt += timedelta(minutes=45)
 							# Update start_time with the new value
 							start_time = start_time_dt.strftime('%H:%M:%S')
+							# Update end_time with the new value
+							end_time = end_time_dt.strftime('%H:%M:%S')
 					# Construct the formatted date
 					current_year = datetime.now().year
 					date_str = f"{current_year}-{sheet_name}"
