@@ -41,7 +41,7 @@ st.warning("""
 st.title("Attendance Import Tool")
 
 # Prompt the user for the initial date
-date = st.date_input("Pick a date")
+date = st.date_input("Pick a date", value=None)
 # Info message for the date selection
 st.info("Select the date for which you want to import attendance records.")
 # LMS attendance file upload
@@ -261,12 +261,17 @@ if st.button("Process Files"):
 					if start_time and end_time:
 						start_time_dt = datetime.strptime(start_time, "%H:%M:%S")
 						end_time_dt = datetime.strptime(end_time, "%H:%M:%S")
+						# Night Shift Handling: Check if the start time starts after 20:00
+						if start_time_dt > datetime.strptime("20:00:00", "%H:%M:%S"):
+							# Swap start and end time's A.M. and P.M.
+							start_time_dt -= timedelta(hours=12)
+							end_time_dt += timedelta(hours=12)
 						# Calculate the duration between start_time and end_time
 						duration = end_time_dt - start_time_dt
 						# Check if the duration is greater than 4 hours
 						if duration > timedelta(hours=4):
-							# Add 30 minutes from start_time
-							start_time_dt += timedelta(minutes=30)
+							# Add 45 minutes from start_time
+							start_time_dt += timedelta(minutes=45)
 							# Update start_time with the new value
 							start_time = start_time_dt.strftime('%H:%M:%S')
 					# Construct the formatted date
@@ -297,11 +302,5 @@ if st.button("Process Files"):
 			file_name=new_import_filename,
 			mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 		)
-
-	# Remove the source_files, extracted_files, and combined_records, final_output_files folders
-	shutil.rmtree('source_files')
-	shutil.rmtree('extracted_files')
-	shutil.rmtree('combined_records')
-	shutil.rmtree('final_output_files')
-	# Rerun the script
-	st.rerun()
+	# Reset date
+	date = None
